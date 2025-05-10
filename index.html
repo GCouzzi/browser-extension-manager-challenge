@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+  
+  <title>Frontend Mentor | Browser extensions manager UI</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box; 
+    }
+    .attribution { 
+      margin: 16px 0 16px 0;
+      font-size: 13px; 
+      text-align: center; 
+      color: hsl(200, 60%, 99%);
+    }
+    .attribution a { color: hsl(228, 45%, 44%); }
+    @font-face {
+      font-family: 'NotoSans-Bold';
+      src: url('/assets/fonts/static/NotoSans-Bold.ttf') format('truetype');
+    }
+    @font-face {
+      font-family: 'NotoSans-Medium';
+      src: url('/assets/fonts/static/NotoSans-Medium.ttf') format('truetype');
+    }
+    @font-face {
+      font-family: 'NotoSans-Regular';
+      src: url('/assets/fonts/static/NotoSans-Regular.ttf') format('truetype');
+    }
+    body {
+      background-repeat: no-repeat;
+      background-image: linear-gradient(180deg, #040918 0%, #091540 100%);
+      width: 100%;
+      height: 100%;
+    }
+    .topbar{
+      display: flex;
+      flex-direction:row;
+      justify-content:space-between;
+      margin: 2rem 5rem;
+      padding: 0.75rem;
+      background-color: hsl(226, 25%, 17%);
+      border-radius: 1.25rem;
+    }
+    #sun{
+      border-radius: 0.75rem;
+      background-color: hsl(225, 23%, 24%);
+      padding: 0.75rem;
+      cursor: pointer;
+    }
+    .middle-bar{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin: 2rem 5rem;
+      padding: 0.75rem;
+      color: hsl(200, 60%, 99%);
+      align-items: center;
+      font-family: 'NotoSans-Medium';
+    }
+    .middle-bar button{
+      border-radius: 1.5rem;
+      background-color: hsl(225, 23%, 24%);
+      color: hsl(200, 60%, 99%);
+      border: 1px solid;
+      border-color: hsl(226, 11%, 37%);
+      font-size: 16px;
+      padding: 0.6rem 1.2rem;
+      cursor: pointer;
+      font-family: 'NotoSans-Regular';
+    }
+    .middle-bar-buttons{
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+      
+    }
+    #all{
+      background-color: hsl(3, 71%, 56%);
+      border: 0;
+      color: hsl(227, 75%, 14%);
+      font-weight:  bold;
+    }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: hsl(226, 11%, 37%);
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      top: 3px; 
+      left: 4px;
+      background-color: hsl(200, 60%, 99%);
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+
+    input:checked + .slider {
+      background-color: hsl(3, 86%, 64%);
+    }
+
+    input:focus + .slider {
+      box-shadow: 0 0 1px hsl(3, 86%, 64%);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(26px);
+      top: 3px; 
+    }
+
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
+    .btn-remove{
+      border-radius: 1.5rem;
+      background-color: hsl(226, 25%, 17%);
+      color: hsl(200, 60%, 99%);
+      border: 1px solid;
+      border-color: hsl(226, 11%, 37%);
+      font-size: 14px;
+      padding: 0.6rem 1.2rem;
+      cursor: pointer;
+      font-family: 'NotoSans-Regular';
+    }
+    .middle-cards{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .middle-row{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin: 0rem 5rem;
+      padding: 0.5rem 0.75rem;
+    }
+    
+    .card{
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+      background-color: hsl(226, 25%, 17%);
+      padding: 0.3rem 1.5rem 1.5rem 1.5rem;
+      border-radius: 1rem;
+      border: 1px hsl(226, 11%, 37%) solid;
+    }
+    .card-top{
+      display: flex;
+      flex-direction: row;
+      margin-top: 18px;
+      gap: 20px;
+      color: hsl(200, 60%, 99%)
+    }
+    .card-top img{
+      align-self: flex-start
+    }
+    
+    .card-top h3{
+      font-family: 'NotoSans-Medium';
+    }
+    .card-top p{
+      font-family: 'NotoSans-Regular';
+      font-size: 14px;
+      color: hsl(0, 0%, 78%);
+      text-wrap: wrap;
+      min-width: 0px;
+      max-width: 250px;
+      margin-top: 0px;
+      min-height: 60px;
+      max-height: 60px;
+      overflow: auto;
+    }
+    .card-bottom{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <img src="/assets/images/logo.svg">
+    <img id="sun" src="/assets/images/icon-sun.svg">
+  </div>
+
+  <div class="middle">
+
+    <div class="middle-bar">
+      <h1>Extensions List</h1>
+      <div class="middle-bar-buttons">
+        <button id="all">All</button>
+        <button>Active</button>
+        <button>Inactive</button>
+      </div>
+    </div>
+
+    <div class="middle-cards">
+
+      <div class="middle-row">
+
+        <div class="card">
+          <div class="card-top">
+            <img id="" src="/assets/images/logo-devlens.svg">
+            <div>
+              <h3>DevLens</h3>
+              <p>Quickly inspect page layouts and visualize element boundaries.</p>
+            </div>
+          </div>
+          <div class="card-bottom">
+            <button class="btn-remove">Remove</button>
+            <label class="switch">
+              <input type="checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-top">
+            <img id="" src="/assets/images/logo-style-spy.svg">
+            <div>
+              <h3>StyleSpy</h3>
+              <p>Instantly analyze and copy CSS from any webpage element.</p>
+            </div>
+          </div>
+          <div class="card-bottom">
+            <button class="btn-remove">Remove</button>
+            <label class="switch">
+              <input type="checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-top">
+            <img id="" src="/assets/images/logo-speed-boost.svg">
+            <div>
+              <h3>SpeedBoost</h3>
+              <p>Optimizes browser resource usage to accelerate page loading.</p>
+            </div>
+          </div>
+          <div class="card-bottom">
+            <button class="btn-remove">Remove</button>
+            <label class="switch">
+              <input type="checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="middle-row">
+
+        <div class="card">
+          <div class="card-top">
+            <img id="" src="/assets/images/logo-json-wizard.svg">
+            <div>
+              <h3>JSONWizard</h3>
+              <p> Formats, validates, and prettifies JSON responses in-browser.</p>
+            </div>
+          </div>
+          <div class="card-bottom">
+            <button class="btn-remove">Remove</button>
+            <label class="switch">
+              <input type="checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-top">
+            <img id="" src="/assets/images/logo-style-spy.svg">
+            <div>
+              <h3>TabMaster Pro</h3>
+              <p>Organizes browser tabs into groups and sessions.</p>
+            </div>
+          </div>
+          <div class="card-bottom">
+            <button class="btn-remove">Remove</button>
+            <label class="switch">
+              <input type="checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-top">
+            <img id="" src="/assets/images/logo-speed-boost.svg">
+            <div>
+              <h3>ViewportBuddy</h3>
+              <p>Simulates various screen resolutions directly within the browser.</p>
+            </div>
+          </div>
+          <div class="card-bottom">
+            <button class="btn-remove">Remove</button>
+            <label class="switch">
+              <input type="checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="middle-row">
+
+        <div class="card">
+          <div class="card-top">
+            <img id="" src="/assets/images/logo-markup-notes.svg">
+            <div>
+              <h3>Markup Notes</h3>
+              <p> Enables annotation and notes directly onto webpages for collaborative debugging</p>
+            </div>
+          </div>
+          <div class="card-bottom">
+            <button class="btn-remove">Remove</button>
+            <label class="switch">
+              <input type="checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-top">
+            <img id="" src="/assets/images/logo-grid-guides.svg">
+            <div>
+              <h3>GridGuides</h3>
+              <p>Overlay customizable grids and alignment guides on any webpage.</p>
+            </div>
+          </div>
+          <div class="card-bottom">
+            <button class="btn-remove">Remove</button>
+            <label class="switch">
+              <input type="checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-top">
+            <img id="" src="/assets/images/logo-palette-picker.svg">
+            <div>
+              <h3>Palette Picker</h3>
+              <p>Instantly extracts color palettes from any webpage.</p>
+            </div>
+          </div>
+          <div class="card-bottom">
+            <button class="btn-remove">Remove</button>
+            <label class="switch">
+              <input type="checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="middle-row">
+        <div class="card">
+          <div class="card-top">
+            <img id="" src="/assets/images/logo-link-checker.svg">
+            <div>
+              <h3>LinkChecker</h3>
+              <p> Scans and highlights broken links on any page.</p>
+            </div>
+          </div>
+          <div class="card-bottom">
+            <button class="btn-remove">Remove</button>
+            <label class="switch">
+              <input type="checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-top">
+            <img id="" src="/assets/images/logo-dom-snapshot.svg">
+            <div>
+              <h3>DOM Snapshot</h3>
+              <p>Capture and export DOM structures quickly.</p>
+            </div>
+          </div>
+          <div class="card-bottom">
+            <button class="btn-remove">Remove</button>
+            <label class="switch">
+              <input type="checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-top">
+            <img id="" src="/assets/images/logo-console-plus.svg">
+            <div>
+              <h3>ConsolePlus</h3>
+              <p>Enhanced developer console with advanced filtering and logging.</p>
+            </div>
+          </div>
+          <div class="card-bottom">
+            <button class="btn-remove">Remove</button>
+            <label class="switch">
+              <input type="checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>. 
+    Coded by <a href="">GCouzzi</a>.
+  </div>
+</body>
+</html>
